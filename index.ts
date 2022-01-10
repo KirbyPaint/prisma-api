@@ -1,8 +1,8 @@
 import { PrismaClient, User } from "@prisma/client";
-
-const prisma = new PrismaClient();
 import readline from "readline";
 import { login, register } from "./scripts/login";
+
+const prisma = new PrismaClient();
 
 async function main() {
   console.log("Hello and welcome to the database");
@@ -22,29 +22,8 @@ async function main() {
         loggedInUser = await register(prisma);
         break;
     }
-    console.log(loggedInUser);
   });
-
-  // const user = await prisma.user.create({
-  //   data: {
-  //     firstName: "John",
-  //     secondName: "Doe",
-  //     email: "john@doe.com",
-  //   },
-  // });
-
-  // const successfulPost = await prisma.user.findUnique({
-  //   where: {
-  //     email: "john@doe.com",
-  //   },
-  // });
-
-  // if (successfulPost) {
-  //   console.log("we found the user");
-  //   console.log(successfulPost);
-  // } else {
-  //   console.log("we did not find the user");
-  // }
+  // rl.close();
 }
 
 main()

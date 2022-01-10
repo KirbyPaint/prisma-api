@@ -1,25 +1,12 @@
 import { PrismaClient, User } from "@prisma/client";
 import readline from "readline";
+import { prompt } from "./utility";
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
   terminal: false,
 });
-
-function prompt(prompt: string) {
-  // const rl = readline.createInterface({
-  //   input: process.stdin,
-  //   output: process.stdout,
-  // });
-
-  return new Promise((resolve) =>
-    rl.question(prompt, (ans) => {
-      rl.close();
-      resolve(ans);
-    })
-  );
-}
 
 async function lookup(
   prisma: PrismaClient,
@@ -33,7 +20,7 @@ async function lookup(
   });
 
   if (user?.firstName) {
-    console.log("Found user:");
+    console.log(`Found user: ${user.firstName} ${user.secondName}`);
     return user;
   } else {
     throw new Error("User not found");
@@ -41,26 +28,9 @@ async function lookup(
 }
 
 export async function login(prisma: PrismaClient): Promise<User> {
-  // console.log("Activating User Lookup");
-  // let user;
-
-  // try {
-  //   rl.question("Enter your email address\n", async (input: string) => {
-  //     user = await lookup(prisma, input);
-  //   });
-  // } catch (e) {
-  //   user = register(prisma);
-  // }
-
-  // if (!user) {
-  //   throw new Error("User lookup failed somewhere");
-  // }
-  // return user;
-
   const email = await prompt("Enter your email address\n");
   const user = await lookup(prisma, email as string);
   if (user?.firstName) {
-    // console.log("Found user:");
     return user;
   } else {
     throw new Error("User not found");

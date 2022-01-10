@@ -6,11 +6,13 @@ const rl = readline.createInterface({
   terminal: false,
 });
 
-export function prompt(prompt: string) {
+export async function prompt(prompt: string): Promise<string> {
+  console.log(`PROMPT FUNCTION`);
   return new Promise((resolve) =>
     rl.question(prompt, (ans) => {
       rl.close();
       resolve(ans);
+      console.log(`END PROMPT FUNCTION`);
     })
   );
 }
